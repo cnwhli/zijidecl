@@ -1,0 +1,28 @@
+name = "cf-ip-optimizer"
+main = "src/worker.ts"
+compatibility_date = "2025-08-01"
+workers_dev = true
+
+[vars]
+# 可在这里放默认候选 IP 清单（JSON）或使用 KV
+DEFAULT_BYTES = "5000000"  # 5MB
+
+[[kv_namespaces]]
+binding = "FAST_TOP_KV"
+id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+[[durable_objects.bindings]]
+name = "AGGREGATOR"
+class_name = "AggregatorDO"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["AggregatorDO"]
+
+[triggers]
+crons = ["*/2 * * * *"]  # 每2分钟刷新TOP100
+
+# 如使用 D1（可选）
+#[[d1_databases]]
+#binding = "DB"
+#database_id = "xxxx"
