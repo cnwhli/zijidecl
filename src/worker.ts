@@ -1,3 +1,4 @@
+export { AggregatorDO } from "./aggregator";
 export interface Env {
   FAST_TOP_KV: KVNamespace;
   AGGREGATOR: DurableObjectNamespace;
